@@ -1,4 +1,10 @@
-unction createXHR(){
+/**
+ * @file Utility file 
+ * @author Rabah Zeineddine
+ */
+
+
+function createXHR(){
 	if(typeof XMLHttpRequest != 'undefined'){
 		return new XMLHttpRequest();
 	}else{
@@ -105,6 +111,9 @@ const getMessage = (message) => {
             return "Wrong password."
             break;
         case undefined:
+            return "An error ocurred, try again.";
+            break;
+        case "INTERNAL_SERVER_ERROR":
             return "An error ocurred, try again.";
             break;
         default:
