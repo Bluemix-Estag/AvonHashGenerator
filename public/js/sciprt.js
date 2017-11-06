@@ -11,20 +11,29 @@ $(document).ready(() => {
         if (username && username != "") {
             let password = $("#password").val().trim() || null;
             if (password && password != "") {
-                let user = {
-                    username,
-                    password
+                let accountType = $("#accountTypeSelect").val();
+                if (accountType && accountType != "") {
+                    let user = {
+                        username,
+                        password,
+                        accountType
+                    }
+
+                    showLoadingInElement('loginBtn');
+                    userInteract(false);
+                    xhrPost('/api/v1/login', user, (result) => {
+                        removeLoadingInElement("loginBtn", 'Login');
+                        console.log(result);
+                        redirectingAlert(result.url);
+                    }, (err) => {
+                        userInteract(true);
+                        removeLoadingInElement("loginBtn", 'Login');
+                        showAlert(err.message, 'error');
+                    });
+
+                } else {
+                    showAlert("Invalid account type!", "error");
                 }
-                showLoadingInElement('loginBtn');
-                userInteract(false);
-                xhrPost('/api/v1/login', user, (result) => {
-                    removeLoadingInElement("loginBtn",'Login');
-                    redirectingAlert(result.url);
-                }, (err) => {
-                    userInteract(true);
-                    removeLoadingInElement("loginBtn",'Login');
-                    showAlert(err.message, 'error');
-                })
             } else {
                 showAlert("Invalid Password!", "error");
             }
@@ -32,6 +41,9 @@ $(document).ready(() => {
             showAlert("Invalid username!", "error");
         }
     });
+
+
+    $('select').material_select();
 
 })
 

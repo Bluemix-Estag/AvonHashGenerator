@@ -4,60 +4,60 @@
  */
 
 
-function createXHR(){
-	if(typeof XMLHttpRequest != 'undefined'){
-		return new XMLHttpRequest();
-	}else{
-		try{
-			return new ActiveXObject('Msxml2.XMLHTTP');
-		}catch(e){
-			try{
-				return new ActiveXObject('Microsoft.XMLHTTP');
-			}catch(e){}
-		}
-	}
-	return null;
+function createXHR() {
+    if (typeof XMLHttpRequest != 'undefined') {
+        return new XMLHttpRequest();
+    } else {
+        try {
+            return new ActiveXObject('Msxml2.XMLHTTP');
+        } catch (e) {
+            try {
+                return new ActiveXObject('Microsoft.XMLHTTP');
+            } catch (e) { }
+        }
+    }
+    return null;
 }
-function xhrGet(url, callback, errback){
-	var xhr = new createXHR();
-	xhr.open("GET", url, true);
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4){
-			if(xhr.status == 200){
-				callback(JSON.parse(xhr.responseText));
-			}else{
-				errback(JSON.parse(xhr.responseText));
-			}
-		}
-	};
-	
-	xhr.timeout = 100000;
-	xhr.ontimeout = errback;
-	xhr.send();
-}
+function xhrGet(url, callback, errback) {
+    var xhr = new createXHR();
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                callback(JSON.parse(xhr.responseText));
+            } else {
+                errback(JSON.parse(xhr.responseText));
+            }
+        }
+    };
 
-
-
-function xhrPost(url, data, callback, errback){
-	var xhr = new createXHR();
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-type", "application/json");
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4){
-			if(xhr.status == 200){
-				callback(parseJson(xhr.responseText));
-			}else{
-				errback(parseJson(xhr.responseText));
-			}
-		}
-	};
-	xhr.timeout = 100000;
-	xhr.ontimeout = errback;
-	xhr.send(JSON.stringify(data));
+    xhr.timeout = 100000;
+    xhr.ontimeout = errback;
+    xhr.send();
 }
 
-function parseJson(str){
-	return window.JSON ? JSON.parse(str) : eval('(' + str + ')');
+
+
+function xhrPost(url, data, callback, errback) {
+    var xhr = new createXHR();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                callback(parseJson(xhr.responseText));
+            } else {
+                errback(parseJson(xhr.responseText));
+            }
+        }
+    };
+    xhr.timeout = 100000;
+    xhr.ontimeout = errback;
+    xhr.send(JSON.stringify(data));
+}
+
+function parseJson(str) {
+    return window.JSON ? JSON.parse(str) : eval('(' + str + ')');
 }
 
 
@@ -98,7 +98,7 @@ const showAlert = (message, type) => {
     timer = setTimeout(() => {
         $("#alertBox").addClass('hide');
         $(painel_message).removeClass(colorClass);
-    }, 3000);
+    }, 6000);
 
 }
 
@@ -115,6 +115,9 @@ const getMessage = (message) => {
             break;
         case "INTERNAL_SERVER_ERROR":
             return "An error ocurred, try again.";
+            break;
+        case "BAD_REQUEST":
+            return "An error ocurred, Verify your info and try again.";
             break;
         default:
             return message;
