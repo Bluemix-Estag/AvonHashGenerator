@@ -1,0 +1,25 @@
+{
+  "name": "avonhashgenerator",
+  "version": "1.0.0",
+  "description": "AvonHashGenerator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bluemix-Estag/AvonHashGenerator.git"
+  },
+  "author": "Rabah Zeineddine",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bluemix-Estag/AvonHashGenerator/issues"
+  },
+  "homepage": "https://github.com/Bluemix-Estag/AvonHashGenerator#readme",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  }
+}
