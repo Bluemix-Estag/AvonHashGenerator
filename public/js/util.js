@@ -98,7 +98,7 @@ const showAlert = (message, type) => {
     timer = setTimeout(() => {
         $("#alertBox").addClass('hide');
         $(painel_message).removeClass(colorClass);
-    }, 6000);
+    }, 4000);
 
 }
 

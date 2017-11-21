@@ -53,20 +53,7 @@ const redirectingAlert = (url) => {
     $("#alertBox").removeClass('hide');
     let painel_message = $("#alertBox").children()[1];
     $(painel_message).addClass('green accent-4');
-    downCounterMsh(5);
+    painel_message.innerHTML = 'Redirecting to facebook messenger..';
     window.location.href = url;
-}
 
-
-
-
-const downCounterMsh = (painel_message, num) => {
-    if (num == 0) {
-        return 0;
-    } else {
-        painel_message.innerHTML = 'Redirecting to facebook messenger in ' + num + '..';
-        setTimeout(() => {
-            downCounterMsh(painel_message, num - 1);
-        }, 1000);
-    }
 }
