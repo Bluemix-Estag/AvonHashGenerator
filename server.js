@@ -102,6 +102,55 @@ const generateRSAHash = (data, callback) => {
 
 }
 
+
+
+app.post('/pdf', (req,res) => {
+
+        var filename,
+          octetStreamMime = "application/pdf",
+          contentType;
+    
+        filename = response.headers('x-filename') || 'bankSlip' + Date.now() + '.pdf';
+        // Determine the content type from the header or default to "application/octet-stream"
+        contentType = octetStreamMime;
+        var byteCharacters = atob(response.data.bankSlipResp);
+        var byteNumbers = new Array(byteCharacters.length);
+        for (var i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        var isChrome =    navigator.userAgent.indexOf('Chrome') != -1;
+    
+        if (navigator.msSaveBlob) {
+          var blob = new Blob([byteArray], {
+            type: contentType
+          });
+          navigator.msSaveBlob(blob, filename);
+        } /*else if (isChrome) {
+          var reader = new FileReader();
+          var cBlob = new Blob([byteArray], {
+            type: 'application/pdf'
+          });
+          reader.onload = function(e) {
+            // window.top.location.href = reader.result;
+            var save = document.createElement('a');
+    
+            save.href = reader.result;
+            save.download = filename;
+    
+            document.body.appendChild(save);
+            save.click();
+            document.body.removeChild(save);
+          }
+          reader.readAsDataURL(cBlob);
+        }*/ else {
+          var blob = new Blob([byteArray], {
+            type: 'application/pdf'
+          });
+          FileSaver.saveAs(blob, filename);
+        }
+});
+
 app.listen(app.get('port'), '0.0.0.0', () => {
     console.log(`App is listening on ${chalk.cyan(app.get('port'))}`);
 })
